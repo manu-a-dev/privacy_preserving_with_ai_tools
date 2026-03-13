@@ -1,10 +1,11 @@
 # Source: https://ai.google.dev/gemini-api/docs/image-generation
+# You'll need to pay.
 
 import os
-from PIL import Image  # Run pip install Pillow
+from PIL import Image  # Run % pip install Pillow
 from google import genai
 from dotenv import load_dotenv
-from google.genai import types # Run pip install google-genai
+from google.genai import types # Run % pip install google-genai
 
 load_dotenv()
 
@@ -12,10 +13,23 @@ client = genai.Client(
     api_key=os.getenv('GOOGLE_API_KEY'),
 )
 
-prompt = ("Create a picture of a nano banana dish in a fancy restaurant with a Gemini theme")
+# prompt = (
+#     "give the man a different face with distinct human-like features",
+# )
+
+# prompt = (
+#     "give the man a different face",
+# )
+
+prompt = (
+    "give the man a different face with distinct features",
+)
+
+image = Image.open("./imgs/random_man.jpg")
+
 response = client.models.generate_content(
-    model="gemini-2.0-flash-image",
-    contents=[prompt],
+    model="gemini-3.1-flash-image-preview", # Changed this model for image editing.
+    contents=[prompt, image],
 )
 
 for part in response.parts:
@@ -23,9 +37,4 @@ for part in response.parts:
         print(part.text)
     elif part.inline_data is not None:
         image = part.as_image()
-        image.save("generated_image.png")
-
-# Result: "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits."
-    # Might be better than OpenAI because we get 100 images per day for free.
-        # https://support.google.com/gemini/answer/16275805?hl=en
-    # Did some digging, we'll still need to add payment information anyways. Annoying.
+        image.save("./imgs/anonymized.png")
