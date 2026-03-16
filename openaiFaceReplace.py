@@ -1,5 +1,5 @@
 import os
-
+import base64
 import requests
 from PIL import Image # Run pip install Pillow
 from openai import OpenAI # https://github.com/openai/openai-python/discussions/742
@@ -12,6 +12,14 @@ client = OpenAI(
 )
 # to edit existing image
 def censor(image):
-  text = "TURN THIS MAN INTO ROCKS"
-  out = openai.Image.create_edit(image= open(image),prompt=text,n=1)
-  return requests.get(out['data'][0]['url'])
+  text = "remove the face in the picture, replace it with an ai generated face"
+  out = client.images.edit(
+  model ="gpt-image-1.5",
+  image= [open(image,'rb')],
+  prompt=text,
+  n=1)
+  return base64.b64decode(out.data[0].b64_json)
+
+edited= censor('./imgs/random_man.jpg')
+with open('./imgs/openai/random_man_openai.png','wb') as file:
+	file.write(edited)
