@@ -13,19 +13,34 @@ client = genai.Client(
     api_key=os.getenv('GOOGLE_API_KEY'),
 )
 
+"""
+These prompts are dedicated for an individual.
+"""
 # prompt = (
-#     "give the man a different face with distinct human-like features",
+#     "Give the man a different face with distinct human-like features",
 # )
 
 # prompt = (
-#     "give the man a different face",
+#     "Give the man a different face.",
 # )
 
-prompt = (
-    "give the man a different face with distinct features",
-)
+# prompt = (
+#     "Give the man a different face with distinct features",
+# )
 
-image = Image.open("./imgs/random_man.jpg")
+# prompt = (
+#     "Give the man a different face. Change only the face and neck",
+# )
+
+"""
+These prompts are dedicated for a group.
+"""
+# This gave a rather interesting result, as it only seemed to have anonymized the left-most face.
+# prompt = (
+#     "Give the people different faces. Change only their faces and necks",
+# )
+
+image = Image.open("./imgs/multiple_people.jpg")
 
 response = client.models.generate_content(
     model="gemini-3.1-flash-image-preview", # Changed this model for image editing.
