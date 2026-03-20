@@ -17,29 +17,29 @@ client = genai.Client(
 Start prompts!
 """
 # prompt = (
-#     "Give the man a different face with distinct human-like features",
+#     "Give the person a different face with distinct human-like features",
 # )
 
 # prompt = (
-#     "Give the man a different face.",
+#     "Give the person a different face.",
 # )
 
 # prompt = (
-#     "Give the man a different face with distinct features",
+#     "Give the person a different face with distinct features",
 # )
 
 # prompt = (
-#     "Give the man a different face. Change only the face and neck",
+#     "Give the person a different face. Change only the face and neck",
 # )
 
 prompt = (
-    "Give the man a different photorealistic face. Change only the face and neck",
+    "Give the person a different photorealistic face. Change only the face and neck",
 )
 """
 End prompts!
 """
 
-image = Image.open("../../imgs/original/individual.jpg")
+image = Image.open("../../imgs/original/individual_3.jpg")
 
 response = client.models.generate_content(
     model="gemini-3.1-flash-image-preview", # Changed this model for image editing.
