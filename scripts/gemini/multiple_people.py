@@ -14,26 +14,7 @@ client = genai.Client(
 )
 
 """
-These prompts are dedicated for an individual.
-"""
-# prompt = (
-#     "Give the man a different face with distinct human-like features",
-# )
-
-# prompt = (
-#     "Give the man a different face.",
-# )
-
-# prompt = (
-#     "Give the man a different face with distinct features",
-# )
-
-# prompt = (
-#     "Give the man a different face. Change only the face and neck",
-# )
-
-"""
-These prompts are dedicated for a group.
+Start prompts!
 """
 # This gave a rather interesting result, as it only seemed to have anonymized the left-most face.
 # prompt = (
@@ -80,22 +61,19 @@ These prompts are dedicated for a group.
 #     "Identify and mark all faces in the image. Then, give each face a different realistic face"
 # )
 
-prompt = ( 
-    "Identify all faces in the image. Give each face a different face with distinct features. Change only the face and neck"
-)
-
-"""
-These prompts are dedicated for a license plate.
-"""
-# prompt = (
-#     "Identify the license plate in the image" 
-#     ""
+# prompt = ( 
+#     "Identify all faces in the image. Give each face a different face with distinct features. Change only the face and neck"
 # )
 
-# TODO: Change this.
-# image = Image.open("./imgs/gemini/individual/original.jpg")
-# image = Image.open("./imgs/gemini/multiple_people/multiple_people.jpg")
-image = Image.open("../original_imgs/3_people.jpg")
+prompt = ( 
+    "Give each face a different face with distinct and photorealistic features. Change only the face and neck"
+)
+"""
+End prompts!
+"""
+
+image = Image.open("../../imgs/original/3_people.jpg")
+# image = Image.open("../../imgs/original/8_people.jpg")
 
 response = client.models.generate_content(
     model="gemini-3.1-flash-image-preview", # Changed this model for image editing.
@@ -107,4 +85,5 @@ for part in response.parts:
         print(part.text)
     elif part.inline_data is not None:
         image = part.as_image()
-        image.save("../generated_imgs/gemini/anonymized.jpg")
+        image.save("../../imgs/generated/gemini/3_people/just_anonymized.jpg")
+        # image.save("../../imgs/generated/gemini/8_people/just_anonymized.jpg")
